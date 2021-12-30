@@ -1,35 +1,25 @@
-import type * as React from 'react'
-import { motion } from 'framer-motion'
-import TopBar from './components/top-bar'
-import logo from './logo.png'
+import React, { useState, useEffect, useCallback } from "react"
+import Editor from "./components/editor"
+import './app.css'
+import Preview from "./components/preview"
 
-const containerMotion = {
-  initial: 'hidden',
-  animate: 'visible',
-  variants: {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  }
-}
+const App: React.FC = () => {
+    const [doc, setDoc] = useState<string>("# Welcome to Notted! Start writing down some markdown code, and see how its becoming reality\n")
 
-function App() {
-  return (
-    <div tw="h-screen w-screen flex flex-col pt-12">
-      <TopBar />
-      <motion.div tw="h-full" {...containerMotion}>
-        <div tw="flex flex-col items-center justify-center h-full pb-0">
-          <img tw="h-48 ml-5" src={logo} draggable="false" />
+    const handleDocChange = useCallback(newDoc => {
+        setDoc(newDoc)
+    }, [])
+
+    return (
+        <div className="app">
+            <Editor 
+                onChange={handleDocChange}
+                initialDoc={doc}
+            />
+
+            <Preview doc={doc}/>
         </div>
-      </motion.div>
-    </div>
-  )
+    )
 }
 
 export default App

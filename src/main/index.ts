@@ -1,8 +1,9 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import type { BrowserWindowConstructorOptions } from 'electron'
 import contextMenu from 'electron-context-menu'
 import windowStateKeeper from 'electron-window-state'
 import { getTwConfig, getTwConfigPath } from '@twstyled/util'
+import * as fs from "fs"
 
 const resolvedTailwindConfig = getTwConfig(getTwConfigPath())
 
@@ -10,15 +11,9 @@ const isDevelopment = !app.isPackaged
 
 function createWindow() {
   const windowOptions: BrowserWindowConstructorOptions = {
-    minWidth: 800,
-    minHeight: 600,
-    backgroundColor: resolvedTailwindConfig.theme.colors.primary[800],
-    titleBarStyle: 'hidden',
-    autoHideMenuBar: true,
-    trafficLightPosition: {
-      x: 20,
-      y: 32
-    },
+    minWidth: 1200,
+    minHeight: 900,
+    title: "Notted",
     webPreferences: {
       contextIsolation: true,
       devTools: isDevelopment,
